@@ -8,6 +8,12 @@ import PasswordGenerator from "./Pages/PasswordGenerator";
 import MouseTracker from "./Pages/MouseTracker";
 import CounterRedux from "./Pages/CounterRedux";
 import UseStateCounter from "./Pages/UseStateCounter";
+import Login from "./Authorization/Login";
+import Register from "./Authorization/Register";
+import { AuthProvider } from "./Authorization/AuthContext";
+import PrivateRoute from "./Authorization/PrivateRoute";
+import { useAuth } from "./Authorization/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function BuggyComponent() {
   throw new Error("I crashed!");
@@ -15,6 +21,13 @@ function BuggyComponent() {
 
 function Layout({ children }) {
   const { theme, toggleTheme } = useTheme();
+    const { logout } = useAuth();
+  const navigate = useNavigate();
+
+   const handleLogout = () => {
+    logout();          // clear user state
+    navigate("/Login"); // redirect to login page
+  };
 
   const styles = {
     backgroundColor: theme === "light" ? "#fff" : "#333",
@@ -34,6 +47,13 @@ function Layout({ children }) {
           minHeight: "100vh",
         }}
       >
+        <button
+          onClick={handleLogout}
+          className="btn btn-danger"
+        >
+          Logout
+        </button>
+
         <Link to="/Home" className="nav-link">Home</Link>
         <Link to="/About" className="nav-link">About</Link>
         <Link to="/PasswordGenerator" className="nav-link">Password Generator</Link>
@@ -56,23 +76,78 @@ function Layout({ children }) {
 }
 
 const router = createBrowserRouter([
-  { path: "/", element: <Layout><Home /></Layout> },
-  { path: "/Home", element: <Layout><Home /></Layout> },
-  { path: "/About", element: <Layout><About /></Layout> },
-  { path: "/PasswordGenerator", element: <Layout><PasswordGenerator /></Layout> },
-  { path: "/MouseTracker", element: <Layout><MouseTracker /></Layout> },
-  { path: "/CounterRedux", element: <Layout><CounterRedux /></Layout> },
-  { path: "/UseStateCounter", element: <Layout><UseStateCounter /></Layout> },
+  { path: "/Login", element: <Login /> },
+  { path: "/Register", element: <Register /> },
+  {
+    path: "/",
+    element: (
+      <PrivateRoute>
+        <Layout><Home /></Layout>
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/Home",
+    element: (
+      <PrivateRoute>
+        <Layout><Home /></Layout>
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/About",
+    element: (
+      <PrivateRoute>
+        <Layout><About /></Layout>
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/PasswordGenerator",
+    element: (
+      <PrivateRoute>
+        <Layout><PasswordGenerator /></Layout>
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/MouseTracker",
+    element: (
+      <PrivateRoute>
+        <Layout><MouseTracker /></Layout>
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/CounterRedux",
+    element: (
+      <PrivateRoute>
+        <Layout><CounterRedux /></Layout>
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/UseStateCounter",
+    element: (
+      <PrivateRoute>
+        <Layout><UseStateCounter /></Layout>
+      </PrivateRoute>
+    ),
+  },
 ]);
+
+
 
 function App() {
   return (
+    <AuthProvider>
     <ThemeProvider>
       <RouterProvider router={router} />
       <ErrorBoundary>
         <BuggyComponent />
       </ErrorBoundary>
     </ThemeProvider>
+    </AuthProvider>
   );
 }
 
