@@ -39,6 +39,11 @@ function Layout({ children }) {
   return (
     <div style={styles}>
       {/* Sidebar navigation */}
+       <button
+          onClick={handleLogout} style={{position: 'absolute', top: 10, right: 10}}
+          className="btn btn-danger">
+          Logout
+        </button>
       <nav
         className="nav flex-column p-3"
         style={{
@@ -47,12 +52,7 @@ function Layout({ children }) {
           minHeight: "100vh",
         }}
       >
-        <button
-          onClick={handleLogout}
-          className="btn btn-danger"
-        >
-          Logout
-        </button>
+       
 
         <Link to="/Home" className="nav-link">Home</Link>
         <Link to="/About" className="nav-link">About</Link>
