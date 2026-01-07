@@ -6,7 +6,7 @@ import About from "./Pages/About";
 import ErrorBoundary from "./Pages/ErrorBoundary";
 import PasswordGenerator from "./Pages/PasswordGenerator";
 import MouseTracker from "./Pages/MouseTracker";
-import CounterRedux from "./Pages/CounterRedux"; 
+import CounterRedux from "./Pages/CounterRedux";
 import UseStateCounter from "./Pages/UseStateCounter";
 
 function BuggyComponent() {
@@ -20,29 +20,37 @@ function Layout({ children }) {
     backgroundColor: theme === "light" ? "#fff" : "#333",
     color: theme === "light" ? "#000" : "#fff",
     minHeight: "100vh",
-    padding: "20px",
+    display: "flex", // flex container for sidebar + content
   };
 
   return (
     <div style={styles}>
-      <nav style={{ marginBottom: "20px" }} class="nav flex-column">
-        <Link to="/Home" style={{ marginRight: "10px" }}>Home</Link>
-        <Link to="/About" style={{ marginRight: "10px" }}>About</Link>
-        <Link to="/PasswordGenerator" style={{ marginRight: "10px" }}>PasswordGenerator</Link>
-        <Link to="/MouseTracker" style={{ marginRight: "10px" }}>MouseTracker</Link>
-        <Link to="/CounterRedux" style={{ marginRight: "10px" }}>CounterRedux</Link>
-        <Link to="/UseStateCounter" style={{ marginRight: "10px" }}>UseStateCounter</Link>
+      {/* Sidebar navigation */}
+      <nav
+        className="nav flex-column p-3"
+        style={{
+          width: "220px",
+          borderRight: "1px solid #ccc",
+          minHeight: "100vh",
+        }}
+      >
+        <Link to="/Home" className="nav-link">Home</Link>
+        <Link to="/About" className="nav-link">About</Link>
+        <Link to="/PasswordGenerator" className="nav-link">Password Generator</Link>
+        <Link to="/MouseTracker" className="nav-link">Mouse Tracker</Link>
+        <Link to="/CounterRedux" className="nav-link">Counter Redux</Link>
+        <Link to="/UseStateCounter" className="nav-link">UseState Counter</Link>
 
         <button
           onClick={toggleTheme}
-          style={{ marginLeft: "20px" }}
-          className={`btn ${theme === "light" ? "btn-dark" : "btn-light"}`}
+          className={`btn mt-3 ${theme === "light" ? "btn-dark" : "btn-light"}`}
         >
           {theme === "light" ? "Dark Theme" : "Light Theme"}
         </button>
-
       </nav>
-      {children}
+
+      {/* Main content area */}
+      <main className="flex-grow-1 p-4">{children}</main>
     </div>
   );
 }
@@ -61,9 +69,10 @@ function App() {
   return (
     <ThemeProvider>
       <RouterProvider router={router} />
-      <ErrorBoundary> <BuggyComponent /> </ErrorBoundary>
+      <ErrorBoundary>
+        <BuggyComponent />
+      </ErrorBoundary>
     </ThemeProvider>
-
   );
 }
 
