@@ -9,7 +9,7 @@ function ExpensiveCalculation({ num }) {
   return <p>Result: {result}</p>;
 }
 
-function App() {
+export default function Appsz() {
   const [count, setCount] = useState(0);
   return (
     <div>
