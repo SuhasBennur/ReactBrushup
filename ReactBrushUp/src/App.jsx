@@ -21,10 +21,10 @@ function BuggyComponent() {
 
 function Layout({ children }) {
   const { theme, toggleTheme } = useTheme();
-    const { logout } = useAuth();
+  const { logout } = useAuth();
   const navigate = useNavigate();
 
-   const handleLogout = () => {
+  const handleLogout = () => {
     logout();          // clear user state
     navigate("/Login"); // redirect to login page
   };
@@ -39,11 +39,11 @@ function Layout({ children }) {
   return (
     <div style={styles}>
       {/* Sidebar navigation */}
-       <button
-          onClick={handleLogout} style={{position: 'absolute', top: 10, right: 10}}
-          className="btn btn-danger">
-          Logout
-        </button>
+      <button
+        onClick={handleLogout} style={{ position: 'absolute', top: 10, right: 10 }}
+        className="btn btn-danger">
+        Logout
+      </button>
       <nav
         className="nav flex-column p-3"
         style={{
@@ -52,8 +52,6 @@ function Layout({ children }) {
           minHeight: "100vh",
         }}
       >
-       
-
         <Link to="/Home" className="nav-link">Home</Link>
         <Link to="/About" className="nav-link">About</Link>
         <Link to="/PasswordGenerator" className="nav-link">Password Generator</Link>
@@ -141,12 +139,12 @@ const router = createBrowserRouter([
 function App() {
   return (
     <AuthProvider>
-    <ThemeProvider>
-      <RouterProvider router={router} />
-      <ErrorBoundary>
-        <BuggyComponent />
-      </ErrorBoundary>
-    </ThemeProvider>
+      <ThemeProvider>
+        <RouterProvider router={router} />
+        <ErrorBoundary>
+          <BuggyComponent />
+        </ErrorBoundary>
+      </ThemeProvider>
     </AuthProvider>
   );
 }
