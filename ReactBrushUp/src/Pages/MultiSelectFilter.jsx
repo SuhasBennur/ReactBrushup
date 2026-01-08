@@ -78,7 +78,8 @@ function FilterableTable() {
       </select>
 
       {/* Location Filter */}
-      <select value={selectedLocation} onChange={(e) => setSelectedLocation(e.target.value)}>
+      <select value={selectedLocation} onChange={(e) => 
+        setSelectedLocation(e.target.value)}>
         <option value="">All Locations</option>
         {locationOptions.map(loc => (
           <option key={loc} value={loc}>{loc}</option>

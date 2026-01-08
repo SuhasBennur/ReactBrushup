@@ -10,6 +10,8 @@ import CounterRedux from "./Pages/CounterRedux";
 import UseStateCounter from "./Pages/UseStateCounter";
 import Login from "./Authorization/Login";
 import Register from "./Authorization/Register";
+import MultiSelectFilter from "./Pages/MultiSelectFilter";
+import CountryStateDropdown from "./Pages/CountryStateDropdown";
 import { AuthProvider } from "./Authorization/AuthContext";
 import PrivateRoute from "./Authorization/PrivateRoute";
 import { useAuth } from "./Authorization/AuthContext";
@@ -58,6 +60,8 @@ function Layout({ children }) {
         <Link to="/MouseTracker" className="nav-link">Mouse Tracker</Link>
         <Link to="/CounterRedux" className="nav-link">Counter Redux</Link>
         <Link to="/UseStateCounter" className="nav-link">UseState Counter</Link>
+        <Link to="/MultiSelectFilter" className="nav-link">MultiSelectFilter</Link>
+        <Link to="/CountryStateDropdown" className="nav-link">CountryStateDropdown</Link>
 
         <button
           onClick={toggleTheme}
@@ -129,6 +133,22 @@ const router = createBrowserRouter([
     element: (
       <PrivateRoute>
         <Layout><UseStateCounter /></Layout>
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/MultiSelectFilter",
+    element: (
+      <PrivateRoute>
+        <Layout><MultiSelectFilter /></Layout>
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/CountryStateDropdown",
+    element: (
+      <PrivateRoute>
+        <Layout><CountryStateDropdown /></Layout>
       </PrivateRoute>
     ),
   },
